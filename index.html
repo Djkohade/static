@@ -7,41 +7,50 @@
   <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
-  <img id="loader" src="files/loader.png">
+  <img id="loader" src="files/loader.png" style="display:none;">
   <div id="content">Loading...</div>
 
   <script>
 
-function loadPage(page) {
-  if (!page) {
-    document.getElementById('content').textContent = 'Error #1';
-    return;
-  }
-  if (!/^[a-zA-Z0-9-_]+$/.test(page)) {
-    document.getElementById('content').textContent = 'Error #2';
-    return;
-  }
+    function getParam(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
 
-  document.getElementById('loader').style.display = 'inline';
-  document.getElementById('content').textContent = '';
+    function loadPage(page) {
+      if (!page) {
+        document.getElementById('content').textContent = 'Error #1';
+        return;
+      }
+      if (!/^[a-zA-Z0-9-_]+$/.test(page)) {
+        document.getElementById('content').textContent = 'Error #2';
+        return;
+      }
 
-  setTimeout(() => {
-    fetch(`pages/${page}.html`)
-      .then(response => {
-        if (!response.ok) throw new Error('404');
-        return response.text();
-      })
-      .then(html => {
-        document.getElementById('loader').style.display = 'none';
-        document.getElementById('content').innerHTML = html;
-      })
-      .catch(err => {
-        document.getElementById('loader').style.display = 'none';
-        //document.getElementById('content').textContent = 'Error: ' + err.message;
-      });
-  }, 3000); // задержка 3000 мс = 3 секунды
-}
+      document.getElementById('loader').style.display = 'inline';
+      document.getElementById('content').textContent = '';
 
+      setTimeout(() => {
+        fetch(`pages/${page}.html`)
+          .then(response => {
+            if (!response.ok) throw new Error('404');
+            return response.text();
+          })
+          .then(html => {
+            document.getElementById('loader').style.display = 'none';
+            document.getElementById('content').innerHTML = html;
+          })
+          .catch(err => {
+            document.getElementById('loader').style.display = 'none';
+            //document.getElementById('content').textContent = 'Error: ' + err.message;
+          });
+      }, 3000);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const page = getParam('p') || 'index';
+      loadPage(page);
+    });
   </script>
 
 </body>
