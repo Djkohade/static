@@ -1,5 +1,65 @@
 
-
+<!--
 <link href="css/style.css" rel="stylesheet">
 
 <div class="block">Hello World</div>
+pages/tgapps.html
+-->
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Загрузка страниц</title>
+  <style>
+    #content {
+      border: 1px solid #ccc;
+      padding: 10px;
+      min-height: 200px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Главная страница</h1>
+  <div id="content">Здесь будет загружено содержимое</div>
+
+  <script>
+    // Функция для получения параметра p из URL
+    function getParam(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
+
+    // Функция загрузки файла в div#content
+    function loadPage(page) {
+      if (!page) {
+        document.getElementById('content').textContent = 'Параметр p не задан';
+        return;
+      }
+      // Безопасность: разрешаем только буквы, цифры, -, _
+      if (!/^[a-zA-Z0-9-_]+$/.test(page)) {
+        document.getElementById('content').textContent = 'Недопустимое имя страницы';
+        return;
+      }
+
+      fetch(`pages/${page}.html`)
+        .then(response => {
+          if (!response.ok) throw new Error('Страница не найдена');
+          return response.text();
+        })
+        .then(html => {
+          document.getElementById('content').innerHTML = html;
+        })
+        .catch(err => {
+          document.getElementById('content').textContent = 'Ошибка загрузки: ' + err.message;
+        });
+    }
+
+    // При загрузке страницы
+    document.addEventListener('DOMContentLoaded', () => {
+      const page = getParam('p') || 'index'; // по умолчанию index
+      loadPage(page);
+    });
+  </script>
+</body>
+</html>
