@@ -17,14 +17,7 @@
         <div class="video-thumbnail">
         </div>
       </div>-->
-<script>
 
-	document.querySelector("#btn_1").onclick = function(){
-	  alert("Ну нажал и нажал...");
-	}
-
-	
-	</script>
       <div class="buttons">
         <button class="btn blue" id="btn_1">Управление чатами</button>
         <button class="btn green" id="btn_2">Управление ключевыми словами</button>
@@ -33,9 +26,24 @@
     </div>
 
     <nav class="nav-bar">
-      <a class="active" href="#">Главная</a>
-      <a href="#">Оплата</a>
-      <a href="#">Аккаунт</a>
-      <a href="#">Помощь</a>
+      <a class="active" href="#" id="btn_4">Главная</a>
+      <a href="#" id="btn_4">Оплата</a>
+      <a href="#" id="btn_4">Аккаунт</a>
+      <a href="#" id="btn_4">Помощь</a>
     </nav>
   </div>
+  
+<script>
+	document.querySelector("#btn_1").onclick = function(){
+	  alert("Ну нажал и нажал...");
+	}
+	document.querySelector("#btn_2").onclick = function(){
+	  alert("Меня не надо нажимать!");
+	}
+	document.querySelector("#btn_3").onclick = function(){
+	  alert("Меня можно нажать");
+	}	
+	document.querySelector("#btn_4").onclick = function(){
+	  alert("Я не работаю");
+	}	
+</script>
