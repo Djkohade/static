@@ -4,3 +4,10 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
 }
+
+.start_loader{
+	//display:none;
+	margin-top: 190px;
+	vertical-align: middle;
+	margin-left: 100px;
+}
