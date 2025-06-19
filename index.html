@@ -29,7 +29,7 @@
 
       document.getElementById('loader').style.display = 'inline';
       document.getElementById('content').textContent = '';
-
+	  
       setTimeout(() => {
         fetch(`pages/${page}.html`)
           .then(response => {
