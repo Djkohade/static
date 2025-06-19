@@ -1,56 +1,29 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Landing html page</title> 
-  <link href="css/style.css" rel="stylesheet">
-</head>
-<body>
-  <img id="loader" src="files/loader.png">
-  <div id="content">Loading...</div>
+function loadPage(page) {
+  if (!page) {
+    document.getElementById('content').textContent = 'Error #1';
+    return;
+  }
+  if (!/^[a-zA-Z0-9-_]+$/.test(page)) {
+    document.getElementById('content').textContent = 'Error #2';
+    return;
+  }
 
-  <script>
+  document.getElementById('loader').style.display = 'inline';
+  document.getElementById('content').textContent = '';
 
-    function getParam(name) {
-      const urlParams = new URLSearchParams(window.location.search);
-      return urlParams.get(name);
-    }
-
-    function loadPage(page) {
-      if (!page) {
-        document.getElementById('content').textContent = 'Error #1';
-        return;
-      }
-      if (!/^[a-zA-Z0-9-_]+$/.test(page)) {
-        document.getElementById('content').textContent = 'Error #2';
-        return;
-      }
-
-      document.getElementById('loader').style.display = 'inline';
-      document.getElementById('content').textContent = '';
-
-      fetch(`pages/${page}.html`)
-        .then(response => {
-          if (!response.ok) throw new Error('404');
-          return response.text();
-        })
-        .then(html => {
-          document.getElementById('loader').style.display = 'none';
-          document.getElementById('content').innerHTML = html;
-        })
-        .catch(err => {
-          document.getElementById('loader').style.display = 'none';
-          //document.getElementById('content').textContent = 'Error: ' + err.message;
-        });
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      const page = getParam('p') || 'index';
-      loadPage(page);
-    });
-  </script>
-
-</body>
-</html>
-
+  setTimeout(() => {
+    fetch(`pages/${page}.html`)
+      .then(response => {
+        if (!response.ok) throw new Error('404');
+        return response.text();
+      })
+      .then(html => {
+        document.getElementById('loader').style.display = 'none';
+        document.getElementById('content').innerHTML = html;
+      })
+      .catch(err => {
+        document.getElementById('loader').style.display = 'none';
+        //document.getElementById('content').textContent = 'Error: ' + err.message;
+      });
+  }, 3000); // задержка 3000 мс = 3 секунды
+}
