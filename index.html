@@ -1,3 +1,17 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Landing html page</title> 
+  <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+  <img id="loader" src="files/loader.png">
+  <div id="content">Loading...</div>
+
+  <script>
+
 function loadPage(page) {
   if (!page) {
     document.getElementById('content').textContent = 'Error #1';
@@ -27,3 +41,9 @@ function loadPage(page) {
       });
   }, 3000); // задержка 3000 мс = 3 секунды
 }
+
+  </script>
+
+</body>
+</html>
+
