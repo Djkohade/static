@@ -7,6 +7,7 @@
   <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
+  <img id="loader" src="files/loader.png">
   <div id="content">Loading...</div>
 
   <script>
@@ -18,13 +19,16 @@
 
     function loadPage(page) {
       if (!page) {
-        document.getElementById('content').textContent = 'Параметр p не задан';
+        document.getElementById('content').textContent = 'Error #1';
         return;
       }
       if (!/^[a-zA-Z0-9-_]+$/.test(page)) {
-        document.getElementById('content').textContent = 'Недопустимое имя страницы';
+        document.getElementById('content').textContent = 'Error #2';
         return;
       }
+
+      document.getElementById('loader').style.display = 'inline';
+      document.getElementById('content').textContent = '';
 
       fetch(`pages/${page}.html`)
         .then(response => {
@@ -32,9 +36,11 @@
           return response.text();
         })
         .then(html => {
+          document.getElementById('loader').style.display = 'none';
           document.getElementById('content').innerHTML = html;
         })
         .catch(err => {
+          document.getElementById('loader').style.display = 'none';
           //document.getElementById('content').textContent = 'Error: ' + err.message;
         });
     }
@@ -47,3 +53,4 @@
 
 </body>
 </html>
+
