@@ -1,46 +1,26 @@
-
-<!--
-<link href="css/style.css" rel="stylesheet">
-
-<div class="block">Hello World</div>
-pages/tgapps.html
--->
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Landing html page</title> 
-
-  <style>
-    #content {
-      //border: 1px solid #ccc;
-      //padding: 10px;
-      //min-height: 200px;
-    }
-  </style>
+  <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
-  <!--<h1>Главная страница</h1>-->
   <div id="content">Loading...</div>
 
   <script>
 
-    // Функция для получения параметра p из URL
     function getParam(name) {
       const urlParams = new URLSearchParams(window.location.search);
       return urlParams.get(name);
     }
 
-    // Функция загрузки файла в div#content
     function loadPage(page) {
       if (!page) {
         document.getElementById('content').textContent = 'Параметр p не задан';
         return;
       }
-      // Безопасность: разрешаем только буквы, цифры, -, _
       if (!/^[a-zA-Z0-9-_]+$/.test(page)) {
         document.getElementById('content').textContent = 'Недопустимое имя страницы';
         return;
@@ -48,39 +28,22 @@ pages/tgapps.html
 
       fetch(`pages/${page}.html`)
         .then(response => {
-          if (!response.ok) throw new Error('Страница не найдена');
+          if (!response.ok) throw new Error('404');
           return response.text();
         })
         .then(html => {
           document.getElementById('content').innerHTML = html;
         })
         .catch(err => {
-          //document.getElementById('content').textContent = 'Ошибка загрузки: ' + err.message;
+          //document.getElementById('content').textContent = 'Error: ' + err.message;
         });
     }
 
-    // При загрузке страницы
     document.addEventListener('DOMContentLoaded', () => {
-      const page = getParam('p') || 'index'; // по умолчанию index
+      const page = getParam('p') || 'index';
       loadPage(page);
     });
   </script>
-  
-  
-  
-  <script>
-	document.querySelector("#btn_1").onclick = function(){
-	  alert("Ну нажал и нажал...");
-	}
-	document.querySelector("#btn_2").onclick = function(){
-	  alert("Меня не надо нажимать!");
-	}
-	document.querySelector("#btn_3").onclick = function(){
-	  alert("Меня можно нажать");
-	}	
-	document.querySelector("#btn_4").onclick = function(){
-	  alert("Я не работаю");
-	}	
-</script>
+
 </body>
 </html>
